@@ -1,58 +1,55 @@
 # Motion
 
-Claude Code skills for controlling a Windows PC, plus a **multi-cursor
-overlay** that makes one real mouse look like a team of AI agents working
-on screen. Several labeled, colored cursors (Wiring, Parts, QA, Simulation…)
-move, click and draw wires.
+Claude Code skills for controlling the mouse on a Windows PC, with **multiple
+labeled agent cursors**. Claude splits a task across named agents (Wiring,
+Parts, QA, Simulation…). Each agent has its own colored cursor on screen, and
+the agent doing the current step drives the real mouse pointer.
 
-## What's inside
+## Skills
 
-| Path | What it is |
+| Skill | What it does |
 |---|---|
-| `skills/pc-control/` | Skill: how Claude drives a Windows PC with computer-use tools safely. Covers app access, focus problems, dialogs that destroy work and placement-mode editors. `references/proteus.md` has notes for Labcenter Proteus 9. |
-| `skills/multi-cursor/` | Skill + scripts: the overlay (`scripts/cursors.py`) and its controller (`scripts/cursorctl.py`). |
-| `launchers/` | Double-click `Start Cursors.bat` / `Stop Cursors.bat`. |
-| `install-skills.bat` | Copies both skills into `%USERPROFILE%\.claude\skills`. |
+| `skills/pc-control/` | How Claude drives a Windows PC with computer-use tools safely. Covers app access, keyboard focus, dialogs that can destroy work, and editors with placement modes. `references/proteus.md` has notes for Labcenter Proteus 9. |
+| `skills/multi-cursor/` | Multi-agent cursor control. `scripts/cursors.py` draws the agent cursors, and `scripts/cursorctl.py` hands the real pointer from one agent to the next. |
+
+Also included: `launchers/Start Cursors.bat`, `launchers/Stop Cursors.bat`,
+and `install-skills.bat`.
 
 ## Requirements
 
 - Windows 10/11
-- Python 3.10+ with tkinter (the standard python.org installer includes it).
-  No other packages.
+- Python 3.10+ with tkinter (included in the python.org installer). No other
+  packages.
+- Claude Code with computer use enabled
 
-## Install the skills
+## Install
 
 Double-click `install-skills.bat`, or copy the two folders under `skills/`
-into `%USERPROFILE%\.claude\skills\`. Claude Code picks them up in the next
-session.
+into `%USERPROFILE%\.claude\skills\`. Claude Code loads them in the next
+session. Then ask Claude things like *"use the cursors to inspect the open
+Proteus circuit"*.
 
-## Use the overlay
+## How multi-cursor control works
 
-```bat
-launchers\Start Cursors.bat                       :: Proteus preset
-launchers\Start Cursors.bat --preset screen       :: generic whole-screen preset
-launchers\Start Cursors.bat --labels "Copy,CTA,Geo,Budget" --count 4
-```
-
-Hotkeys (global): **F9** hide/show, **F10** quit.
-
-Controller commands:
+Windows has one real mouse pointer, so agents take turns driving it:
 
 ```bat
-python skills\multi-cursor\scripts\cursorctl.py use Wiring   :: Wiring agent rides the real mouse
-python skills\multi-cursor\scripts\cursorctl.py wander       :: everyone wanders
-python skills\multi-cursor\scripts\cursorctl.py hide | show | stop | status
+python skills\multi-cursor\scripts\cursorctl.py start --preset proteus
+python skills\multi-cursor\scripts\cursorctl.py use Parts     :: Parts drives the pointer
+python skills\multi-cursor\scripts\cursorctl.py use Wiring    :: hand off to Wiring
+python skills\multi-cursor\scripts\cursorctl.py wander        :: release the pointer
+python skills\multi-cursor\scripts\cursorctl.py stop
 ```
 
-The overlay is a transparent, click-through, always-on-top window. It never
-sends input, so it can't change anything on screen. Whatever real actions
-happen (yours, or Claude's through computer use) are dressed up by whichever
-agent is on the mouse.
+| Command | Effect |
+|---|---|
+| `start [--preset proteus\|screen] [--labels "A,B,C"] [--count N]` | Open the overlay with a preset or custom agents |
+| `use <Label>` | That agent takes the real pointer. Its moves and clicks (with a ripple in its color) are Claude's real computer-use actions |
+| `wander` | No agent is driving |
+| `hide` / `show` / `stop` / `status` | Overlay control |
 
-## Recording tips
+Hotkeys (global): **F9** hide/show, **F10** close.
 
-- Capture the **whole display** (Snipping Tool screen recording, OBS Display
-  Capture). Window-only capture misses the overlay.
-- Park your own mouse in a corner while Claude acts.
-- It's a visual effect. If you post the video, a short caption saying so
-  keeps viewers from assuming several real agents were at work.
+The overlay window is transparent and click-through, so it never blocks or
+sends input to the app underneath. All real actions come from Claude's
+computer-use calls, following the safety rules in `pc-control`.

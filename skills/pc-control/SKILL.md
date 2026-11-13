@@ -1,6 +1,6 @@
 ---
 name: pc-control
-description: How to drive the user's Windows PC with the computer-use tools (screenshots, clicks, typing in desktop apps) safely and efficiently. Use this whenever the user asks you to do something in a desktop app on their PC: "open Proteus and…", "click…", "do this on my PC", "control my screen", "modify the open circuit/file in <app>", or shares a screen-recording and wants it reproduced. Also use it before combining computer use with the multi-cursor overlay. Covers app access, focus problems, dialogs that can destroy work, editors with placement modes (Proteus, CAD, design tools), and Windows-specific gotchas learned on this machine.
+description: How to drive the user's Windows PC with the computer-use tools (screenshots, clicks, typing in desktop apps) safely and efficiently. Use this whenever the user asks you to do something in a desktop app on their PC: "open Proteus and…", "click…", "do this on my PC", "control my screen", "modify the open circuit/file in <app>", or shares a video of a task and wants it done on their PC. Also use it before combining computer use with the multi-cursor overlay. Covers app access, focus problems, dialogs that can destroy work, editors with placement modes (Proteus, CAD, design tools), and Windows-specific gotchas learned on this machine.
 ---
 
 # PC control (Windows)
@@ -100,6 +100,6 @@ instead. Ask before sending, posting, deleting or submitting anything.
 
 ## Pairing with the multi-cursor overlay
 
-If the user wants the actions to *look* like several AI agents doing the work
-(for a recording), also use the `multi-cursor` skill. It makes the real mouse
-pointer show up as whichever labeled agent you choose for each step.
+If the user wants the work split across several named agents with their own
+cursors, also use the `multi-cursor` skill. The agent you choose for each step
+drives the real mouse pointer.

@@ -1,10 +1,11 @@
 """
-Multi-cursor overlay: draws several labelled "agent" cursors that move,
-click and drag wires across the screen. It's purely visual. The window is
-transparent and click-through, so it never touches the app underneath.
+Multi-cursor overlay: draws a labelled cursor for each agent. The overlay
+window is transparent and click-through, so it never blocks or sends input
+to the app underneath.
 
-One agent can be put onto the REAL mouse pointer (via the control file), so
-real actions look like that agent did them while the rest keep wandering.
+The driving agent (set via the control file) locks onto the REAL mouse
+pointer, so every real move and click shows as that agent. The other agents
+stay active around the work area until it's their turn.
 
 Hotkeys (global):  F9 = hide/show   F10 = quit
 
