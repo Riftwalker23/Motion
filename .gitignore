@@ -1,0 +1,6 @@
+# runtime files written by the overlay
+control.txt
+active.txt
+overlay.pid
+__pycache__/
+*.pyc
